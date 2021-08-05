@@ -82,6 +82,7 @@ btnHold.addEventListener("click", function () {
             scores[activePlayer];
         //2. Check if player's score is >= 100
         if (scores[activePlayer] >= 20) {
+            alert(`PLAYER ${activePlayer} IS THE WINNER!`);
             playing = false;
             diceElement.classList.add("hidden");
             document

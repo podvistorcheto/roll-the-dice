@@ -17,10 +17,30 @@ score1Element.textContent = 0;
 score2Element.textContent = 0;
 diceElement.classList.add("hidden");
 
-const scores = [0, 0];
-let currentScore = 0;
-let activePlayer = 0;
-let playing = true;
+let scores;
+let currentScore;
+let activePlayer;
+let playing;
+
+//start game with these starting conditions
+const gameInit = function () {
+    scores = [0, 0];
+    currentScore = 0;
+    activePlayer = 0;
+    playing = true;
+
+    score1Element.textContent = 0;
+    score2Element.textContent = 0;
+    current0Element.textContent = 0;
+    current1Element.textContent = 0;
+
+    diceElement.classList.add("hidden");
+    player0Element.classList.remove("player--winner");
+    player1Element.classList.remove("player--winner");
+    player0Element.classList.add("player--active");
+    player1Element.classList.remove("player--active");
+};
+gameInit();
 
 const switchPlayer = function () {
     currentScore = 0;
@@ -39,19 +59,15 @@ btnRoll.addEventListener("click", function () {
         diceElement.src = `pics/dice-${dice}.png`;
         console.log(dice);
 
-        // 3. Check if rolled dice score is 1, if so then switch player
+        // 3. Check if rolled dice score is 1, if true, switch player
         if (dice !== 1) {
             // add dice to the current score
             currentScore += dice;
             document.getElementById(`current--${activePlayer}`).textContent =
                 currentScore;
         } else {
-            // switch player when score is 1
-            document.getElementById(`current--${activePlayer}`).textContent = 0;
-            currentScore = 0;
-            activePlayer = activePlayer === 0 ? 1 : 0;
-            player0Element.classList.toggle("player--active");
-            player1Element.classList.toggle("player--active");
+            // call switch player when score is 1
+            switchPlayer();
         }
     }
 });
@@ -81,3 +97,5 @@ btnHold.addEventListener("click", function () {
         // Finish the game
     }
 });
+
+btnNew.addEventListener("click", gameInit);
